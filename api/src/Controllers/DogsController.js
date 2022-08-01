@@ -2,7 +2,7 @@ const axios = require('axios');
 const { Dog, Temperament } = require ('../db.js');
 const { API_KEY } = process.env
 
-//----------------------- GET All API Dogs-----------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 const getAllApiDogs = async () => {
     try {
         const pedidoApi = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
@@ -95,10 +95,35 @@ const getAllDogsByID = async (req, res) => {
         }
         else {
             res.status(404).send('No hay perros con el ID ' + id);
+           // res.json(allDogs);
         }
     }
     catch (error) {
         console.log('AllDogsByID Error', error);
+    }
+}
+
+
+
+const createNewDog = async (req, res) => {
+    try {
+        const { name, height, weight, life_span, temperament, image, createdInDb } = req.body;
+        const newDog = await Dog.create({
+            name,
+            height,
+            weight,
+            life_span,
+            image,
+            createdInDb
+        });
+        let temperamentDB = await Temperament.findAll({
+            where: { name: temperament },
+        })
+        await newDog.addTemperament(temperamentDB)
+        res.status(201).json(newDog);
+    }
+    catch (error) {
+        console.log('Error al crear un nuevo perro', error);
     }
 }
 
@@ -109,6 +134,7 @@ const getAllDogsByID = async (req, res) => {
 
 module.exports= {
     getAllDogsByName, 
-    getAllDogsByID, 
+    getAllDogsByID,
+    createNewDog, 
     getAllDogs
 }

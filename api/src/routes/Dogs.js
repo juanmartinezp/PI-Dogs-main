@@ -1,12 +1,18 @@
 const { Router } = require('express');
 const { getAllDogsByName } = require('../Controllers/DogsController.js');
+const { getAllDogsByID } = require('../Controllers/DogsController.js');
+const { getAllDogs } = require('../Controllers/DogsController.js');
+const { createNewDog } = require('../Controllers/DogsController.js');
+
 
 
 const router = Router();
 
-router.get ( '/dogs', getAllDogsByName)
-router.get ( '/get', )
+router.get('/dogs', getAllDogs);
+router.get ( '/name', getAllDogsByName)
+router.get ( '/:id', getAllDogsByID)
+router.post('/create', createNewDog);
 
-router.post ( '/create', )
+//router.post ( '/create', )
 
 module.exports = router;
