@@ -8,8 +8,8 @@ const { createNewDog } = require('../Controllers/DogsController.js');
 
 const router = Router();
 
-router.get('/dogs', getAllDogs);
-router.get ( '/name', getAllDogsByName)
+router.get('/', getAllDogs);
+//router.get ( '/name', getAllDogsByName)
 router.get ( '/:id', getAllDogsByID)
 router.post('/create', createNewDog);
 

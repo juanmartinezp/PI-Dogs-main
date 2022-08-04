@@ -4,7 +4,7 @@ const { getAllTemperaments } = require('../Controllers/TemperamentController.js'
 
 const router = Router();
 
-router.get('/temperaments', getAllTemperaments);
+router.get('/', getAllTemperaments);
 
 
 module.exports = router;
