@@ -179,7 +179,7 @@ export function getDogDetail(id) {
 
 //--------------------- RENDER/ALPAHBET/ORDER ----------------------
 
-    export function getAlpgabetOrder(payload) {
+    export function getAlphabetOrder(payload) {
         return {
             type: "GET_ORDERED_ALPHABET",
             payload,
