@@ -197,17 +197,17 @@ export function getDogDetail(id) {
 
 //---------------------- RENDER/DOG/DELETE -------------------------
 
-// export function deleteDog(id) {
-//     return async function (dispatch) {
-//         try {
-//             const deleteDog = await axios.delete(
-//             `http://localhost:3001/dogs/${id}`)
-//             return dispatch({
-//                 type: "DELETE_DOG",
-//                 payload: deleteDog.data
-//             })
-//         } catch(error) {
-//             console.log("Error deleting the dog", error)
-//         }
-//     }
-// }
+export function deleteDog(id) {
+    return async function (dispatch) {
+        try {
+            const deleteDog = await axios.delete(
+            `http://localhost:3001/dogs/${id}`)
+            return dispatch({
+                type: "DELETE_DOG",
+                payload: deleteDog.data
+            })
+        } catch(error) {
+            console.log("Error deleting the dog", error)
+        }
+    }
+}
