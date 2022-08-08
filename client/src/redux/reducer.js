@@ -42,7 +42,7 @@ function rootReducer(state = initialState, action) {
 
             return {
                 ...state,
-                dogs: action.payload === 'all' ? newDog : finlteredByTypes,
+                dogs: action.payload === 'all' ? newDog : filteredByTypes,
             }
 
             case 'ORDER_BY_ALPHABET':
@@ -93,7 +93,7 @@ function rootReducer(state = initialState, action) {
                 orderedWeightfiltered.sort(function (a, b) {
                     return(a.weightMax) - (b.weightMax);
                 }) :
-                roderedWeightfiltered.sort(function (a, b) {
+                orderedWeightfiltered.sort(function (a, b) {
                     return(b.weightMax) - (a.weightMax);
                 })
             return {

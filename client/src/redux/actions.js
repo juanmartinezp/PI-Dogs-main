@@ -100,6 +100,7 @@ export function createDog(payload) {
 //     }
 // } 
 
+
 //------------------------ RENDER/ALL/TEMPERAMENTS -----------------
 
 export function getAllTemperament() {
@@ -158,6 +159,15 @@ export function getDogDetail(id) {
     //     })
     // }
 
+    //---------------------- RENDER/DOG/API OR DB FILTER -------------------------
+
+    export function filterDogsByOrigin(payload) {
+        return {
+            type: "FILTER_DOGS_BY_ORIGIN",
+            payload,
+        }
+    }
+
     //----------------- RENDER/TEMPERAMENT/FILTER -----------------
 
     export function getTemperamentFilter(payload) {
@@ -179,7 +189,7 @@ export function getDogDetail(id) {
 
 //--------------------- RENDER/ALPAHBET/ORDER ----------------------
 
-    export function getAlphabetOrder(payload) {
+    export function orderByAlphabet(payload) {
         return {
             type: "GET_ORDERED_ALPHABET",
             payload,
@@ -188,7 +198,7 @@ export function getDogDetail(id) {
 
 //--------------------- RENDER/WEIGHT/ORDER ------------------------
 
-    export function getweightOrder(payload) {
+    export function sortByWeight(payload) {
         return {
             type: "GET_WEIGHT_ORDERED",
             payload,

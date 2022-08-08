@@ -3,7 +3,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { getDogDetail, deleteDog } from '../redux/actions';
-import temperamentCard from './Dog';
+import temperamentCard from './temperamentCard';
+import imgDogDefault from './Images/dogDefault.jpg';
+
 
 
 export default function Detail() {
@@ -32,13 +34,13 @@ export default function Detail() {
 
     return (
         <div id='cardDetail'>
-            <h1 id='mainTittle'>{allDogDetai.namel}</h1>
+            <h1 id='mainTittle'>{allDogDetail.namel}</h1>
 
-            {allDogDetail.image ? <img src={dogAllDetail.image} alt= 'dogImg' id='imgDetail'/> : 
-            <img id= 'imgDetail' src={imagDogDefault} alt='dogImg'/>}
+            {allDogDetail.image ? <img src={allDogDetail.image} alt= 'dogImg' id='imgDetail'/> : 
+            <img id= 'imgDetail' src={imgDogDefault} alt='dogImg'/>}
 
             <div>
-                {dogAllDetail.temperaments ? <p>Temperaments: {temperamentCard(allDogDetail.temperaments)}</p>:
+                {allDogDetail.temperaments ? <p>Temperaments: {temperamentCard(allDogDetail.temperaments)}</p>:
                 <p>No temperaments found</p>}
                 <p>Height Max: {allDogDetail.heightMax}</p>
                 <p>Height Min: {allDogDetail.heightMin}</p>

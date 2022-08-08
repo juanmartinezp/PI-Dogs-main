@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { createDogs, getAllTemperament } from '../redux/actions.js';
+import { createDog, getAllTemperament } from '../redux/actions.js';
 
 
 
@@ -20,7 +20,7 @@ function validate(input) {
         errors.heightMin = 'Value must be a positive number';
     }
 
-    else if (!inputHeightMax) {
+    else if (!input.HeightMax) {
         errors.heightMax = 'Maximum Height is required';
     }
 
@@ -113,7 +113,7 @@ export default function CreateDog() {
             {
             if (!input.image) {input.image = 'img'}
 
-            dispatch(createDogs(input))
+            dispatch(createDog(input))
             alert('Dog Race created successfully')
             setInput({
                 name:'',
@@ -138,7 +138,7 @@ export default function CreateDog() {
         })
     }
     return(
-        <div className='createDog'>
+        <div className='createDogs'>
             <h1 className ='title'>Create your Dog</h1>
             <form onSubmit= {e => handleSubmit(e)} id='form'>
                 <ul>
