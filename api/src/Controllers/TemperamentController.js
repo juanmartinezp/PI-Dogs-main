@@ -41,9 +41,6 @@ const getAllTemperaments = async (req, res) => {
         let temperamentapi = apiTemperaments.map(
             (element) => element.temperament?.split(",")).flat() // element.temperament)
 
-
-        // let allTemperaments = [...new Set(temperamentapi)]
-
         temperamentapi.forEach( async (temp) => {
             if(!temp) return 
             const [ createdTemp, isCreated ] = await Temperament.findOrCreate({
