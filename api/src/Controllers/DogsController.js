@@ -10,20 +10,17 @@ try {
 
         let apiInfo = apiReq.data.map(e => {
 
-            console.log(e.weight.metric,'e.weight.metric')
 
-            let weightAux = "";
-            if(e.weight.metric === "NaN") {
-                weightAux = "20 - 60"
-            } else if(e.weight.metric.split("-")[0] === "NaN") {
-                weightAux = "3 - 10"
-            } else {
-                weightAux = e.weight.metric
+            let weightAux = e.weight.metric
+            if(weightAux.includes('NaN') || weightAux.length < 3) {
+                weightAux = "20 - 40"
             }
+            else { weightAux = e.weight.metric }
+            
             return {
             id: e.id,
             name: e.name,
-            weight: e.weight.metric,
+            weight: weightAux,
             height: e.height.metric,
             lifeSpan: e.life_span,
             temperament: e.temperament? e.temperament : "Dog without temperament",
