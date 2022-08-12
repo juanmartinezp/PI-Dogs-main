@@ -3,27 +3,60 @@ const { Dog, Temperament } = require ('../db.js');
 const { API_KEY } = process.env
 
 //-------------------------------------------------------------------------------------------------
-const getAllApiDogs = async () => {
-    try {
-        const pedidoApi = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
-        const dataApi = pedidoApi.data.map((e) => {
-            return {
-                id: e.id,
-                name: e.name,
-                height: e.height.metric,
-                weight: e.weight.metric,
-                life_span: e.life_span,
-                temperament: e.temperament,
-                image: e.image.url,
-            }
-        });
 
-        return dataApi;
-        }
-    catch (error) {
-        console.log('Error en el pedido de la API', error);
-    }
+const getAllApiDogs = async () => {
+try {
+    const apiReq = await axios(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
+
+        let apiInfo = apiReq.data.map(e => {
+
+            console.log(e.weight.metric,'e.weight.metric')
+
+            let weightAux = "";
+            if(e.weight.metric === "NaN") {
+                weightAux = "20 - 60"
+            } else if(e.weight.metric.split("-")[0] === "NaN") {
+                weightAux = "3 - 10"
+            } else {
+                weightAux = e.weight.metric
+            }
+            return {
+            id: e.id,
+            name: e.name,
+            weight: e.weight.metric,
+            height: e.height.metric,
+            lifeSpan: e.life_span,
+            temperament: e.temperament? e.temperament : "Dog without temperament",
+            image: e.image.url? e.image.url : "https://unsplash.com/es/fotos/By-tZImt0Ms"
+            }
+        })
+                    return apiInfo;
+} catch(error) {
+    console.log("getApiDogs Error", error)
 }
+}
+
+// const getAllApiDogs = async () => {
+//     try {
+//         const pedidoApi = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
+//         const dataApi = pedidoApi.data.map((e) => {
+//             return {
+//                 id: e.id,
+//                 name: e.name,
+//                 height: e.height.metric,
+//                 weight: e.weight.metric,
+//                 life_span: e.life_span,
+//                 temperament: e.temperament,
+//                 image: e.image.url,
+//             }
+//         });
+
+//         return dataApi;
+//         }
+//     catch (error) {
+//         console.log('Error en el pedido de la API', error);
+//     }
+// }
 
 
 
