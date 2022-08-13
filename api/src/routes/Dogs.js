@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAllDogsByName } = require('../Controllers/DogsController.js');
+//const { getAllDogsByName } = require('../Controllers/DogsController.js');
 const { getAllDogsByID } = require('../Controllers/DogsController.js');
 const { getAllDogs } = require('../Controllers/DogsController.js');
 const { createNewDog } = require('../Controllers/DogsController.js');
