@@ -30,16 +30,16 @@ export default function Home() {
 //--------------------- Paginado -----------------------
 
 const [page, setPage] = useState(1);
-const [dogsxPage, setDogsxPage] = useState(8);
-const indice = page * dogsxPage;
+// const [dogsxPage, setDogsxPage] = useState(8);
+// const indice = page * dogsxPage;
 
-const indiceFinal = indice - dogsxPage;
+// const indiceFinal = indice - dogsxPage;
 
-const currentPage = allDogs.slice(indiceFinal, indice);
+// const currentPage = allDogs.slice(indiceFinal, indice);
 
-const pagina = (numPage) => {
-        setPage(numPage);
-};
+// const pagina = (numPage) => {
+//         setPage(numPage);
+// };
 
 
 
