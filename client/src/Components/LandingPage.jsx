@@ -1,15 +1,15 @@
+import React from "react"
+import { Link } from "react-router-dom"
+import "./LandingPage.css"
 
-import { Link } from 'react-router-dom';
 
 export default function LandingPage() {
     return (
-        <div className = 'LandingPAge'>
-            <h1 className='tittle'>
-                Weolcome to the Dogs Place
-            </h1>
-            <Link to = '/home'>
-                <button className='btn'>Start</button>
+        <div className="landing">
+            <h3 className="tittle" >Welcome to the Dog APP</h3>
+            <Link to="/home">
+                <button className="btn">Start APP</button>
             </Link>
         </div>
-    );
+    )
 }

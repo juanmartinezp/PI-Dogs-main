@@ -1,20 +1,18 @@
-import React from "react";
+import React from "react"
+import "./Pagination.css"
 
+export default function Pagination ({ dogsPerPage, allDogs, page }) {
+    const pageNumbers = []
 
-
-export default function Paginado ({dogsxPage, allDogs, pagina}){
-    const pageNumbers =[]
-
-    for (let i = 0; i < Math.ceil(allDogs/dogsxPage); i++) {
+    for( let i=0; i < Math.ceil(allDogs/dogsPerPage); i++) {
         pageNumbers.push(i+1)
     }
-    return(
-        <div id='paginado'>
-            <br/>
-                { pageNumbers && pageNumbers.map(number =>(                   
-                <button onClick={()=> pagina(number)} id='btnPag'>{number}</button>                
-                ))}
-            
+    return (
+        <div id="pagination">
+            <br />
+            { pageNumbers && pageNumbers.map(number => (
+                <button onClick={() => page(number)} id="buttonPage">{number}</button>
+            ))}
         </div>
     )
 }

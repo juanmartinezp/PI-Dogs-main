@@ -1,51 +1,52 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import loadingImg from './Images/loading.gif';
-import dog_not_found from './Images/dogNotFound.jpg';
-import Dog from './Dog';
-import SearchDog from './SearchBar';
-import Paginado from './Paginado';
+import React from "react";
+import "./Home.css";
+import loadingGif from "./Styles/loadingGif.gif";
+import notfound from "./Styles/404.jpeg";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import SearchBar from "../SearchBar/SearchBar";
+import Pagination from "../Pagination/Pagination";
+import Dog from "../Dog/Dog";
 
+//-------------------------- ACTIONS/IMPORT -----------------------------
 
-// ----------------------Actions----------------------
 import {
     getAllDogs,
     getAllTemperament,
     getTemperamentFilter,
-    filterDogsByOrigin,
-    orderByAlphabet,
-    sortByWeight,
-} from '../redux/actions.js';
+    getABCOrder,
+    getCBAOrder,
+    orderByWeight,
+    // getWeightMinOrder,
+    // getWeightMaxOrder,
+    getOrderByCreation,
+} from "../../redux/actions";
+
+//------------------------------ REACT/REDUX ----------------------------
 
 export default function Home() {
     const dispatch = useDispatch();
-    const allDogs = useSelector((state) => state.dogs)
-    const allDogsLoaded = useSelector((state) => state.allDogs)
-    const allTemperaments = useSelector((state) => state.allTemperaments)
+    const allDogs = useSelector((state) => state.dogs);
+    const dogAllTemperaments = useSelector((state) => state.allTemperaments);
+    const loading = useSelector((state) => state.loading);
 
-    const [ order, setOrder ] = useState("")
+  //--------------------------- PAGINADO/ESTADO ---------------------------------
 
-//--------------------- Paginado -----------------------
+  // const [order, setOrder] = useState("");
+  // const [page, setPage] = useState(1);
+  // const [dogsxPage, setDogsxPage] = useState(8);
+  // const indice = page * dogsxPage;
 
-const [page, setPage] = useState(1);
-// const [dogsxPage, setDogsxPage] = useState(8);
-// const indice = page * dogsxPage;
+  // const indiceFinal = indice - dogsxPage;
 
-// const indiceFinal = indice - dogsxPage;
+  // const currentPage = allDogs.slice(indiceFinal, indice);
 
-// const currentPage = allDogs.slice(indiceFinal, indice);
+  // const pagina = (numPage) => {
+  //   setPage(numPage);
+  // };
 
-// const pagina = (numPage) => {
-//         setPage(numPage);
-// };
-
-
-
-
-
-//--------------------- HOOKS -----------------------
+  //---------------------------- REACT/HOOKS -------------------------------
 
 useEffect(() => {
     dispatch(getAllDogs());
@@ -54,128 +55,170 @@ useEffect(() => {
 
 function handleTemperamentFilter(e) {
     e.preventDefault();
-    dispatch(getTemperamentFilter(e.target.value))
-    setPage(1);
-    setOrder(e.target.value);
+    dispatch(getTemperamentFilter(e.target.value));
+    // setPage(1);
+    // setOrder(e.target.value);
 }
 
-function handleAlphabetOrder(e) {
-    e.preventDefault();
-    dispatch(orderByAlphabet(e.target.value));
-    setPage(1)
-    setOrder(e.target.value)
+function handleAlphabetOrder(e){ 
+    if(e.target.value === "Asc"){
+        e.preventDefault ();
+        dispatch(getABCOrder(e.target.value));
+        // setPage (1);
+        // setOrder (e.target.value)
+    }else if(e.target.value === "Desc"){
+        e.preventDefault ();
+        dispatch(getCBAOrder(e.target.value));
+        // setPage (1);
+        // setOrder (e.target.value)       
+    }
 }
 
-function handleWeightOrder(e) {
-    e.preventDefault()
-    dispatch(sortByWeight(e.target.value));
-    setPage(1)
-    setOrder(e.target.value)
-}
+function handleOrderByWeight(e) {
+e.preventDefault();
+dispatch(orderByWeight(e.target.value));
+  // setOrder(e.target.value);
+  // setPage (1);
+};
+
+  // function handleWeightOrder(e) {
+  //     e.preventDefault()
+  //     dispatch(getWeightOrder(e.target.value));
+  //     setPage(1)
+  //     setOrder(e.target.value)
+  // }
+
+  // function handleWeightOrder(e) {
+  //   if (e.target.value === "Min") {
+  //     e.preventDefault();
+  //     dispatch(getWeightMinOrder(e.target.value));
+  //     setPage(1);
+  //     setOrder(e.target.value);
+  //   } else if (e.target.value === "Max") {
+  //     e.preventDefault();
+  //     dispatch(getWeightMaxOrder(e.target.value));
+  //     setPage(1);
+  //     setOrder(e.target.value);
+  // }
 
 function handleOrderByCreation(e) {
     e.preventDefault();
-    dispatch(filterDogsByOrigin(e.target.value))
-    setPage(1)
-    setOrder(e.target.value)
+    dispatch(getOrderByCreation(e.target.value));
+    // setPage(1);
+    // setOrder(e.target.value);
 }
 
 function handleClick(e) {
     e.preventDefault();
-    dispatch(getAllDogs())
+    dispatch(getAllDogs());
 }
+
+  //------------------------------ RENDER/HOME -----------------------------
 
 return (
-    <div>
-        {!allDogsLoaded  ?
-        <div className= 'loading' > 
-        <img className = 'loadingImg' src={loadingImg} alt= 'not found'/>
-        </div>:
         <div>
-            <nav id='nav'>
-                <h1 id='tittleHome'>The Dogs World</h1>
+        {loading ? (
+            <div className="loading">
+            <img className="loadingImg" src={loadingGif} alt="not found" />
+            </div>
+        ) : (
+            <div>
+            <nav id="nav">
+                <h1 id="homeTittle">DOGS</h1>
                 <ul>
-                    <li>
-                        <button className='btnDetail2' onClick = {e => { handleClick(e) }}>Refresh</button>
-                    </li>
-                    <li>
-                        <Link to='dogs'>
-                            <buton id='crear'>Create Dog</buton>
-                        </Link>
-                    </li>
-                    <li>
-                        <select 
-                        onChange = {(e) => {handleTemperamentFilter(e)}} className = 'filNav'>
-                        
-                        <option value = {'all'}>All Temperaments</option>
-                        {allTemperaments ?.map((e) => {
-                            return <option value = {e.name}>{e.name}</option>
-                        })}
-                        </select>
-                    </li>
-                    <li>
-                        <select
-                        key='selectOrder'
-                        onChange={(e) => handleAlphabetOrder(e)}
-                        className='filNav'
-                        >
-                            <option value={'allApi'}>Order</option>
-                            <option value={'des'}>Z-A</option>
-                            <option value={'asc'}>A-Z</option>
-                        </select>
-                    </li>
-                    <li>
-                        <select onChange={(e) => handleWeightOrder(e)} className='filNav'>
-                            <option value='selected' hidden>Weight</option>
-                            <option value='desc'>Heavy</option>
-                            <option value='asc'>Light</option>
-                        </select>
-                    </li>
-                    <li>
-                        <select onChange={(e) => handleOrderByCreation(e)} className='filNav'>
-                            <option value='all'>Origin</option>
-                            <option value='api'>DogsApi</option>
-                            <option value='created'>DogsDb</option>
-                        </select>
-                    </li>
-                    <li>
-                        <SearchDog/>
-                    </li>
+                <li>
+                    <button
+                    className="btnStyle1"
+                    onClick={(e) => {
+                        handleClick(e);
+                    }}
+                    >
+                    Refresh
+                    </button>
+                </li>
+                <li>
+                    <Link to="/create">
+                    <button id="create">Create a new Dog</button>
+                    </Link>
+                </li>
+                <li>
+                    <select onChange={(e) => {handleTemperamentFilter(e)}} className="navFilter">
+                        <option value="all">Temperament filter</option>
+                            {dogAllTemperaments?.map((e) => (
+                        <option value={e.name} key={e.id}>{e.name}</option> 
+                        ))}
+                    </select>
+                </li>
+                <li>
+                    <select
+                    key="alphaOrder"
+                    onChange={(e) => handleAlphabetOrder(e)} className="navFilter">
+                    <option value={"allApi"}>Alphabet order</option>
+                    <option value={"Asc"}>A to Z</option>
+                    <option value={"Desc"}>Z to A</option>
+                    </select>
+                </li>
+                <li>
+                    <select
+                    onChange={(e) => handleOrderByWeight(e)} className="navFilter">
+                    <option value="selected" hidden>Weight filter</option>
+                    <option value="Asc">Heavy-Light</option>
+                    <option value="Desc">Light-Heavy</option>
+                    </select>
+                </li>
+                <li>
+                    <select
+                    onChange={(e) => handleOrderByCreation(e)} className="navFilter">
+                    <option value={"all"}>All Dogs</option>
+                    <option value={"api"}>DogsFromApi</option>
+                    <option value="created">DogsFromDb</option>
+                    </select>
+                </li>
+                <li>
+                    <SearchBar />
+                </li>
                 </ul>
-                <div class='clearfix'></div>
+                <div className="clear"></div>
             </nav>
 
-            <Paginado
-            dogsxPage={dogsxPage}
-            allDogs={allDogs.length}
-            pagina={pagina}
-            />
+            {/* <Pagination
+                dogsxPage={dogsxPage}
+                allDogs={allDogs.length}
+                pagina={pagina}
+            /> */}
 
-            { currentPage.length?
-            currentPage?.map((e) => {
+            {allDogs?.length ? (
+                allDogs?.map((e) => {
                 return (
                     <div>
-                        <Link to={`/home/${e.id}`}>
-                            <Dog
-                            name={e.name}
-                            image={e.image}
-                            temperaments={e.temperaments}
-                            id={e.id}
-                            weightMax={e.weightMax}
-                            weightMin={e.weightMin}
-                            />
-                        </Link>
+                    <Link to={`/dogs/${e.id}`}>
+                        <Dog
+                        name={e.name}
+                        image={e.image}
+                        temperament={e.temperament}
+                        id={e.id}
+                        weight={e.weight}
+                        />
+                    </Link>
                     </div>
                 );
-            }): <div>
-                    <h1 className='dogNotFound'>Sorry, Dog not found</h1>
-                    <img className='imgNotFound' src={dog_not_found} alt= 'dog_not_found'/>
-                    <button className='btnDetail1' onClick={e => { handleClick(e) }}>Back</button>
+                })
+            ) : (
+                <div className="noFoundError">
+                <h1 className="dogNotFound">The Dog has not been found</h1>
+                <img className="notFound" src={notfound} alt="notfound" />
+                <button
+                    className="btnStyle2"
+                    onClick={(e) => {
+                    handleClick(e);
+                    }}
+                >
+                    Back
+                </button>
                 </div>
-                }
+            )}
+            </div>
+        )}
         </div>
-    } 
-    </div>
-);
+    );
 }
-

@@ -1,29 +1,25 @@
 const axios = require ("axios");
-// export const GET_ALL_DOGS = "GET_ALL_DOGS";
-// export const GET_DOGS_BY_NAME = "GET_DOGS_BY_NAME";
-// export const GET_DOGS_TEMPERAMENT = "GET_DOGS_TEMPERAMENT";
-// export const GET_DOG_DETAIL = "GET_DOG_DETAIL";
 
 //---------------------------- RUTAS ------------------------------
 
-const RUTA_GET = "http://localhost:3001/dogs/";
-const RUTA_GET_TEMPERAMENT = "http://localhost:3001/temperaments/";
-//const RUTA_GET_DOG_BY_NAME = "http://localhost:3001/dogs?name="
+const RUTA_GET = "http://localhost:3001/dogs";
+const RUTA_GET_TEMPERAMENT = "http://localhost:3001/temperaments";
 const RUTA_POST = "http://localhost:3001/dogs/create";
-
 
 //------------------------ RENDER/HOME ------------------------------
 
 export function getAllDogs() {
     return async function(dispatch) {
         try {
+            dispatch({type: "LOADING", payload: true})
             const allDogs = await axios.get(RUTA_GET)
+            dispatch({type: "LOADING", payload: false})
             return dispatch({
                 type: "GET_ALL_DOGS",
                 payload: allDogs.data
             })
         } catch(error) {
-            console.log("Error getting dogs", error)
+            console.log("Error getting all dogs", error)
         }
     }
 }
@@ -41,23 +37,23 @@ export function getAllDogs() {
 
 //------------------------ RENDER/SEARCH/NAME ----------------------
 
-export function searchByName(name) {
+export function getDogByName(name) {
     return async function(dispatch) {
         try {
             const dogsByName = await axios.get(
-                `http://localhost:3001/dogs?name=${name}`)
+                `${RUTA_GET}/?name=${name}`)
             return dispatch({
                 type: "GET_DOGS_BY_NAME",
                 payload: dogsByName.data
             })
         } catch(error) {
-        console.log("Error getting dogs by name", error)
+            console.log("Error getting dogs by name", error)
         }   
     }
 }
 
 // export const searchByName = (name) => async dispatch => {
-//     return await fetch(http://localhost:3001/dogs?name=${name})
+//     return await fetch(`http://localhost:3001/dogs?name=${name}`)
 //     .then(resp => resp.json())
 //     .then(dogsByName => dispatch({
 //         type: "GET_DOGS_BY_NAME",
@@ -72,42 +68,25 @@ export function searchByName(name) {
 
 export function createDog(payload) {
     return async function (dispatch) {
+        console.log(payload)
         try {
             const createDog = await axios.post(RUTA_POST, payload)
         return dispatch({
             type: "CREATE_DOG",
             payload: createDog.data
         })
-
         } catch(error) {
             console.log("Error creating a new dog", error)
         }
     }
 }
 
-// export const getDogsByName = (name) => {
-//     return async function(dispatch) {
-//         try {
-//             const res = await axios(`
-//             http://localhost:3001/dogs?name=${name}`)
-//         return dispatch({
-//             type: GET_DOGS_BY_NAME,
-//             payload: res.data
-//         })
-//         } catch(error) {
-//             console.log("Error getting dogs name", error)
-//         }
-//     }
-// } 
-
-
 //------------------------ RENDER/ALL/TEMPERAMENTS -----------------
 
 export function getAllTemperament() {
     return async function(dispatch) {
         try {
-            const allTemperaments = await axios.get(
-                RUTA_GET_TEMPERAMENT)
+            const allTemperaments = await axios.get(RUTA_GET_TEMPERAMENT)
             return dispatch({
                 type: "GET_DOGS_TEMPERAMENT",
                 payload: allTemperaments.data
@@ -134,13 +113,13 @@ export function getAllTemperament() {
 export function getDogDetail(id) {
     return async function (dispatch) {
         try {
-            const dogDetail = await axios.get(`
-            http://localhost:3001/dogs/${id}`)
+            dispatch({type: "LOADING", payload: true})
+            const dogDetail = await axios.get(`${RUTA_GET}/${id}`)
+            dispatch({type: "LOADING", payload: false})
         return dispatch({
             type: "GET_DOG_DETAIL",
             payload: dogDetail.data
         })
-
         } catch(error) {
             console.log("Error gettig dog by ID", error)
         }
@@ -159,16 +138,21 @@ export function getDogDetail(id) {
     //     })
     // }
 
-    //---------------------- RENDER/DOG/API OR DB FILTER -------------------------
+    // export function getDogDetail(id) {
+    //     return (dispatch) => {
+    //       fetch(`http://localhost:3001/dogs/${id}`)
+    //         .then((res) => res.json())
+    //         .then((dog) => {
+    //           dispatch({ type: GET_DOG_DETAIL, payload: dog });
+    //         })
+    //         .catch((err) => {
+    //           alert("Error dog ID");
+    //           console.log(err);
+    //         });
+    //     };
+    //   }
 
-    export function filterDogsByOrigin(payload) {
-        return {
-            type: "FILTER_DOGS_BY_ORIGIN",
-            payload,
-        }
-    }
-
-    //----------------- RENDER/TEMPERAMENT/FILTER -----------------
+    //----------------- RENDER/TEMPERAMENT/FILTER ---------------------
 
     export function getTemperamentFilter(payload) {
 
@@ -178,40 +162,58 @@ export function getDogDetail(id) {
         }
     }
 
-//----------------------- RENDER/RACE/FILTER -----------------------
+//--------------------- RENDER/ALPAHBET/ORDER --------------------------
 
-    export function getRaceFilter(payload) {
+    export function getABCOrder(payload) {
         return {
-            type: "GET_RACE_FILTERED",
+            type: "GET_ABC_ORDERED",
             payload,
         }
     }
 
-//--------------------- RENDER/ALPAHBET/ORDER ----------------------
+//--------------------- RENDER/ALPAHBET/ORDER --------------------------
 
-    export function orderByAlphabet(payload) {
+    export function getCBAOrder(payload) {
         return {
-            type: "GET_ORDERED_ALPHABET",
+            type: "GET_CBA_ORDERED",
             payload,
         }
     }
 
-//--------------------- RENDER/WEIGHT/ORDER ------------------------
+// //--------------------- RENDER/WEIGHTMAX/ORDER -------------------------
 
-    export function sortByWeight(payload) {
+//     export function getWeightMaxOrder(payload) {
+//         return {
+//             type: "GET_WEIGHTMAX_ORDERED",
+//             payload,
+//         }
+//     }
+
+//--------------------- RENDER/WEIGHTMIN/ORDER -------------------------
+
+//     export const getWeightMinOrder = (payload) => {
+//         return {
+//             type: "GET_WEIGHTMIN_ORDERED",
+//             payload
+//         }
+// }
+
+//--------------------- RENDER/CREATION/ORDER --------------------------
+
+    export function getOrderByCreation(payload) {
         return {
-            type: "GET_WEIGHT_ORDERED",
+            type: "GET_ORDER_BY_CREATION",
             payload,
         }
     }
 
-//---------------------- RENDER/DOG/DELETE -------------------------
+//---------------------- RENDER/DOG/DELETE ----------------------------
 
 export function deleteDog(id) {
     return async function (dispatch) {
         try {
-            const deleteDog = await axios.delete(
-            `http://localhost:3001/dogs/${id}`)
+            const deleteDog = await axios.delete(`
+            http://localhost:3001/dogs/${id}`)
             return dispatch({
                 type: "DELETE_DOG",
                 payload: deleteDog.data
@@ -220,4 +222,11 @@ export function deleteDog(id) {
             console.log("Error deleting the dog", error)
         }
     }
+}
+
+export function orderByWeight(payload) {
+    return {
+        type: "ORDER_BY_WEIGHT",
+        payload,
+    };
 }

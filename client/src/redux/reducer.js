@@ -1,132 +1,124 @@
 const initialState = {
+    loading: false,
     dogs: [],
     allDogs: [],
-    allTemperament: [],
-    dogDetail: [],
+    allTemperaments: [],
+    dogDetail: []
 }
 
-
 function rootReducer(state = initialState, action) {
-    switch (action.type) {
-        case 'GET_ALL_DOGS':
+
+    switch(action.type) {
+
+        case "LOADING":
             return {
                 ...state,
-                dogs: action.payload,
-                allDogs: action.payload,
-                dogDetail: [],
+                loading: action.payload
             }
 
-        case 'GET_ALL_TEMPERAMENT':
+        case "GET_ALL_DOGS":
             return {
                 ...state,
-                allTemperament: action.payload,
+                dogs: [...action.payload],
+                allDogs: [...action.payload],
+            }
+        
+        case "GET_DOGS_TEMPERAMENT":
+            return {
+                ...state,
+                allTemperaments: action.payload,
             }
 
-            case 'FILTER_BY_TEMPERAMENT':
+        case "GET_TEMPERAMENT_FILTERED":
 
-            const newDog = state.allDogs.filter(e => e.temperaments);
-            const filteredByTypes = newDog.filter(e => {
-
-                if(typeof (e.temperaments) === 'string') {
-                    return e.temperaments.includes(action.payload);
+            const allDogs = state.allDogs
+            const filtered = action.payload === 'all' ? allDogs 
+            : allDogs.filter(e => { 
+                if (e.temperament) {
+                    return e.temperament.includes(action.payload);
+                } else if (e.temperament) {
+                    let temps = e.temperament.map(e => e.name);
+                    return temps.includes(action.payload);
                 }
-
-                if(Array.isArray(e.temperaments)) {
-                    const tempDB = e.temperaments.map(e => e.name);
-                    return tempDB.includes(action.payload);
-                }
-
-                return ('Temperament not Found');
-
-            })
+                return true;
+            });
 
             return {
                 ...state,
-                dogs: action.payload === 'all' ? newDog : filteredByTypes,
-            }
+                dogs: filtered
+            };
 
-            case 'ORDER_BY_ALPHABET':
+        case "GET_ABC_ORDERED":
 
-            const order = action.payload === 'des' ?
-                state.dogs.sort(function (a,b) {
-
-                    if(a.name > b.name) {
-                        return -1;
-                    }
-
-                    if(b.name > a.name) {
-                        return 1;
-                    }
-
-                    return 0;
-                }) :
-
-                state.dogs.sort(function (a, b) {
-
-                    if(a.name > b.name) {
-                        return 1;
-                    }
-
-                    if(b.name > a.name) {
-                        return -1;
-                    }
-
-                    return 0;
-                })
-
+            let abc = state.allDogs.sort(function(a, b){
+                if (a.name > b.name) return 1;
+                if (a.name < b.name) return -1;
+                return 0;
+            });
             return {
                 ...state,
-                dogs: action.payload === 'allApi' ? state.allDogs : order
+                dogs: abc
             }
-
-        case 'FILTER_BY_ORIGIN':
-            const all = state.allDogs;
-            const iriginFiltered = action.payload === 'all' ? all : action.payload === 'created' ? all.filter(e => e.CreatedInDB) : all.filter(e => !e.CreatedInDB);
+        case "GET_CBA_ORDERED":
+            
+            let cba = state.allDogs.sort(function(a, b){
+                if (a.name > b.name) return -1;
+                if (a.name < b.name) return 1;
+                return 0;
+            });
             return {
                 ...state,
-                dogs: iriginFiltered
-            }
+                dogs: cba
+            };
 
         case 'ORDER_BY_WEIGHT':
-            const orderedWeightfiltered = state.allDogs.filter(e => e.weightMax);
-            const orderedWeight = action.payload === 'asc' ?
-                orderedWeightfiltered.sort(function (a, b) {
-                    return(a.weightMax) - (b.weightMax);
-                }) :
-                orderedWeightfiltered.sort(function (a, b) {
-                    return(b.weightMax) - (a.weightMax);
-                })
+            const allWeights = state.allDogs;
+            const orderedWeights = 
+            action.payload === 'Asc'? allWeights.sort(function(a, b) {
+                if (a.weight > b.weight) return 1;
+                if (a.weight < b.weight) return -1;
+                return 0;
+            })
+            : action.payload === 'Desc'? allWeights.sort(function(a, b) {
+                if (a.weight > b.weight) return -1;
+                if (a.weight < b.weight) return 1;
+                return 0;
+            })
+            : allWeights
+
             return {
                 ...state,
-                dogs: orderedWeight,
-            }
+                dogs: orderedWeights
+            };
 
-        case 'GET_BY_NAME':
+
+        case "GET_ORDER_BY_CREATION":
+                const creationOrder = action.payload === "Created" ? state.allDogs.filter(e => e.createdInDb) : state.allDogs.filter(element => !element.createdInDb)
+                    return {
+                        ...state,
+                        dogs: creationOrder
+                    }
+
+        case "GET_DOGS_BY_NAME":
             return {
                 ...state,
                 dogs: action.payload
             }
-        
-        case 'GET_DETAIL':
+
+        case "GET_DOG_DETAIL":
             return {
                 ...state,
                 dogDetail: action.payload
             }
 
-        case 'POST_DOGS':
+        case "DELETE_DOG":
             return {
                 ...state,
             }
-        
-        case 'DELETED_DOG':
-            return {
-                ...state,
-            }
-
-        default:
-            return state;
+            
+        default: 
+        return {...state}
     }
 }
-
 
 export default rootReducer;

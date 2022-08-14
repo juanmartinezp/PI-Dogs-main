@@ -1,59 +1,59 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory, Link } from 'react-router-dom';
-import { getDogDetail, deleteDog } from '../redux/actions';
-import temperamentCard from './temperamentCard';
-import imgDogDefault from './Images/dogDefault.jpg';
+import React from "react";
+import "./Detail.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getDogDetail, deleteDog } from "../../redux/actions";
+import { Link, useNavigate } from "react-router-dom";
+import defaultImage from "./Style/defaultDog.jpg";
+import loadingGif from "../Home/Styles/loadingGif.gif";
 
 
 
 export default function Detail() {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const dogDetails = useSelector(state => state.dogDetail);
+    const loading = useSelector((state) => state.loading);
+
     const { id } = useParams();
 
     useEffect(() => {
         dispatch(getDogDetail(id));
     }, [dispatch, id]);
 
-    const allDogDetail = useSelector((state) => state.dogDetail);
-
-    function handleDelete(e) {
-        if(id.length > 5) {
-            e.preventDefault()
-            dispatch(deleteDog(id))
-            alert('Dog breed deleted')
-            history.push('/home')
-        }
-        else{
-            alert('You can not delete this dog')
-        }
-    }
-    console.log(allDogDetail);
-
     return (
-        <div id='cardDetail'>
-            <h1 id='mainTittle'>{allDogDetail.namel}</h1>
-
-            {allDogDetail.image ? <img src={allDogDetail.image} alt= 'dogImg' id='imgDetail'/> : 
-            <img id= 'imgDetail' src={imgDogDefault} alt='dogImg'/>}
-
+        <div>
+        {loading ? (
+            <div className="loading"> <img src={loadingGif} alt="loading" /></div>
+        ) : (
+            <div id="detailCard">
+            <h1 id="tittle">{dogDetails.name}</h1>
+            {dogDetails.image ? (
+                <img src={dogDetails.image} alt="Dog image" id="imgDetail" />
+            ) : (
+                <img id="imgDetail" src={defaultImage} alt="dogImg" />
+            )}
             <div>
-                {allDogDetail.temperaments ? <p>Temperaments: {temperamentCard(allDogDetail.temperaments)}</p>:
-                <p>No temperaments found</p>}
-                <p>Height Max: {allDogDetail.heightMax}</p>
-                <p>Height Min: {allDogDetail.heightMin}</p>
-                <p>Weight Max: {allDogDetail.weightMax}</p>
-                <p>Weight Min: {allDogDetail.weightMin}</p>
-                <p>Life expectancy in years: {allDogDetail.life_span_min} - {allDogDetail.life_span_max}</p>
+                {dogDetails.temperament ? (
+                <p>Temperaments: {dogDetails.temperament}</p>
+                ) : (
+                <p>Temperaments not found</p>
+                )}
+                <p>Weight in Kg: {dogDetails.weight}</p>
+
+                <p>Height in Cm: {dogDetails.height}</p>
+
+                <p>Life expectancy: {dogDetails.lifeSpan}</p>
+
             </div>
-
-            <Link to='/home'>
-                <button className='btnDetail' onClick={(e) => handleDelete(e)}>Delete</button>
-                <button className='btnDetail'>GoBack</button>
+            <Link to="/home">
+                {/* <button className="detailButton" onClick={(e) => handleDelete(e)}>
+                Delete
+                </button> */}
+                <button className="detailButton">Back</button>
             </Link>
-
+            </div>
+        )}{" "}
         </div>
     );
 }
