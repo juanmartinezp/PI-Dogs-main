@@ -1,0 +1,25 @@
+.styleName {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+
+    width: auto;
+    height: auto;
+    /* align-items: center;
+    justify-content: center;
+    margin-left: center; */
+    background-color: transparent;
+    font-size: 25px;
+}
+
+.styleDogData {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    width: auto;
+    align-items: center;
+    /* align-items: center;
+    justify-content: center;
+    margin-left: center; */
+    background-color: transparent;
+    font-size: 18px;
+    text-decoration: none;
+}

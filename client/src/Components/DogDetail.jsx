@@ -1,27 +1,39 @@
 import React from "react";
-import "./Detail.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getDogDetail, deleteDog } from "../../redux/actions";
-import { Link, useNavigate } from "react-router-dom";
-import defaultImage from "./Style/defaultDog.jpg";
-import loadingGif from "../Home/Styles/loadingGif.gif";
-
+import { getDogDetail } from "../redux/actions.js";
+import { Link } from "react-router-dom";
+import defaultImage from "./Images/dogDefault.jpg";
+import loadingGif from "./Images/loading.gif";
+//import dogTemp from "./Temp"
 
 
 export default function Detail() {
-    const dispatch = useDispatch();
-    const dogDetails = useSelector(state => state.dogDetail);
-    const loading = useSelector((state) => state.loading);
+  const dispatch = useDispatch();
+  const dogDetails = useSelector(state => state.dogDetail);
+  const loading = useSelector((state) => state.loading);
 
-    const { id } = useParams();
+  const { id } = useParams();
 
-    useEffect(() => {
-        dispatch(getDogDetail(id));
-    }, [dispatch, id]);
+  useEffect(() => {
+    dispatch(getDogDetail(id));
+  }, [dispatch, id]);
 
-    return (
+  // console.log(dogDetail);
+
+  // function handleDelete(element) {
+  //   if (id.lenght > 5) {
+  //     element.preventDefault();
+  //     dispatch(deleteDog(id));
+  //     alert("Dog deleted");
+  //     history.push("/home");
+  //   } else {
+  //     alert("You can delete only your Dogs");
+  //   }
+  // }
+
+return (
         <div>
         {loading ? (
             <div className="loading"> <img src={loadingGif} alt="loading" /></div>
@@ -29,7 +41,7 @@ export default function Detail() {
             <div id="detailCard">
             <h1 id="tittle">{dogDetails.name}</h1>
             {dogDetails.image ? (
-                <img src={dogDetails.image} alt="Dog image" id="imgDetail" />
+                <img src={dogDetails.image} alt="Dog img" id="imgDetail" />
             ) : (
                 <img id="imgDetail" src={defaultImage} alt="dogImg" />
             )}

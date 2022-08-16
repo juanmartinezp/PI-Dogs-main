@@ -1,8 +1,8 @@
 import React, { useEffect, useState} from "react";
-import { createDog, getAllTemperament } from "../../redux/actions"
+import { createDog, getAllTemperament } from "../redux/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import "./Create.css"
+
 
 function validation(input) {
     let errors = {}
