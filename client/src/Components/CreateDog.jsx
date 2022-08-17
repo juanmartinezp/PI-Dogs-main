@@ -2,6 +2,7 @@ import React, { useEffect, useState} from "react";
 import { createDog, getAllTemperament } from "../redux/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import './styles/CreateDog.css'
 
 
 function validation(input) {
@@ -202,65 +203,65 @@ export default function CreateDog() {
                 <h1 className="tittle">Create your own Dog</h1>
                     <form onSubmit={e => handleSubmit(e)} id="form">
             <ul>
-                <li>
-                    <label>The name of your dog is...</label>
-                    <input type="text" value={input.name} name="name" onChange={e => handleChange(e)} />
+                <ul>
+                    <label className="createfields">Name your Dog </label>
+                    <input className="input" type="text" value={input.name} name="Dog´s name" onChange={e => handleChange(e)} />
                     {errors.name && (
                         <p className="error">{errors.name}</p>
                     )}
-                </li>
-                <li>
-                    <label>The Max Weight of your dog in Kg is...</label>
-                    <input type="text" value={input.weightMax} name="weightMax" onChange={e => handleChange(e)} />
+                </ul>
+                <ul>
+                    <label className="createfields">Max Weight of your dog (Kg) </label>
+                    <input className="input" type="text" value={input.weightMax} name="weightMax" onChange={e => handleChange(e)} />
                     {errors.weightMax && (
                         <p className="error">{errors.weightMax}</p>
                     )}
-                </li>
-                <li>
-                    <label>The Min Weight of your dog in Kg is...</label>
-                    <input type="text" value={input.weightMin} name="weightMin" onChange={e => handleChange(e)} />
+                </ul>
+                <ul>
+                    <label className="createfields">Min Weight of your dog (Kg) </label>
+                    <input className="input" type="text" value={input.weightMin} name="weightMin" onChange={e => handleChange(e)} />
                     {errors.weightMin && (
                         <p className="error">{errors.weightMin}</p>
                     )}
-                </li>
-                <li>
-                    <label>The Max Height of your dog in Cm is...</label>
-                    <input type="text" value={input.heightMax} name="heightMax" onChange={e => handleChange(e)} />
+                </ul>
+                <ul>
+                    <label className="createfields">Max Height of your dog (cm) </label>
+                    <input className="input" type="text" value={input.heightMax} name="heightMax" onChange={e => handleChange(e)} />
                     {errors.heightMax && (
                         <p className="error">{errors.heightMax}</p>
                     )}
-                </li>
-                <li>
-                    <label>The Min Height of your dog in Cm is...</label>
-                    <input type="text" value={input.heightMin} name="heightMin" onChange={e => handleChange(e)} />
+                </ul>
+                <ul>
+                    <label className="createfields">Min Height of your dog (cm) </label>
+                    <input className="input" type="text" value={input.heightMin} name="heightMin" onChange={e => handleChange(e)} />
                     {errors.heightMin && (
                         <p className="error">{errors.heightMin}</p>
                     )}
-                </li>
-                <li>
-                    <label>The Max life expectancy of your Dog is...</label>
-                    <input type="text" value={input.lifeSpanMax} name="lifeSpanMax" onChange={e => handleChange(e)} />
+                </ul>
+                <ul>
+                    <label className="createfields">The Max life expectancy of your Dog (years) </label>
+                    <input className="input" type="text" value={input.lifeSpanMax} name="lifeSpanMax" onChange={e => handleChange(e)} />
                     {errors.lifeSpanMax && (
                         <p className="error">{errors.lifeSpanMax}</p>
                     )}
-                </li>
-                <li>
-                    <label>The Min life expectancy of your Dog is...</label>
-                    <input type="text" value={input.lifeSpanMin} name="lifeSpanMin" onChange={e => handleChange(e)} />
+                </ul>
+                <ul>
+                    <label className="createfields">The Min life expectancy of your Dog (years) </label>
+                    <input className="input" type="text" value={input.lifeSpanMin} name="lifeSpanMin" onChange={e => handleChange(e)} />
                     {errors.lifeSpanMin && (
                         <p className="error">{errors.lifeSpanMin}</p>
                     )}
-                </li>
-                <li>
-                    <label>Upload an image for your Dog</label>
-                    <input type="text" value={input.image} name="image" onChange={e => handleChange(e)} />
+                </ul>
+                <ul>
+                    <label className="createfields">Upload your Dog´s image url </label>
+                    <input className="input" type="text" value={input.image} name="image" onChange={e => handleChange(e)} />
                     {errors.image && (
                         <p className="error">{errors.image}</p>
                     )}
-                </li>
-                <li>
-                    <select onChange={e => handleSelect(e)} id="temp">
-                        <option value="selected" hidden>Temperaments</option>
+                </ul>
+                <ul>
+                    <select className="tempbutton" onChange={e => handleSelect(e)} id="temp">
+                        <option  value="selected" hidden>Temperaments</option>
                         {allTemperament?.sort(function(a, b){
                             if(a.name < b.name) return -1
                             if(a.name > b.name) return 1
@@ -271,22 +272,22 @@ export default function CreateDog() {
                             )
                         })}
                     </select>
-                </li>
-                <li>
+                </ul>
+                <ul>
                     {input.temperament.map(element =>
                     <div>
                         <h5>
                             {element}
-                            <button onClick={() => handleDelete(element)} className="deleteButtton">X</button>
+                            <button onClick={() => handleDelete(element)} className="deleteButton">Delete</button>
                         </h5>
                     </div>
                     )}
-                </li>
+                </ul>
             </ul>
 
-            <div className="buttonC">
-                <Link to="/home"><button className="buttonH">Back</button></Link>
-                <button type="submit" className="buttonS" id="buttonCreate"><strong>Create</strong></button>
+            <div>
+                <Link to="/home"><button className="buttonBack">Back</button></Link>
+                <button type="submit" className="buttonC" id="buttonCreate"><strong>Create</strong></button>
             </div>
             </form>
             </div>

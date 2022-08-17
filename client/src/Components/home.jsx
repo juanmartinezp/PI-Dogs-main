@@ -116,7 +116,7 @@ return (
             <nav id="nav">
                 <SearchBar/>
                 <ul >
-                <li>
+                <ul>
                     <button
                     className="btnRefresh"
                     onClick={(e) => {
@@ -125,21 +125,21 @@ return (
                     >
                     Refresh
                     </button>
-                </li>
-                <li>
+                </ul>
+                <ul>
                     <Link to="/create">
-                    <button id="create" className="formbutton">Create a new Dog</button>
+                    <button id="create" className="createButton">Create a new Dog</button>
                     </Link>
-                </li>
-                <li>
+                </ul>
+                <ul>
                     <select onChange={(e) => {handleTemperamentFilter(e)}} className="formbutton">
-                        <option value="all">Temperament filter</option>
+                        <option value="all" >Temperament filter</option>
                             {dogAllTemperaments?.map((e) => (
                         <option value={e.name} key={e.id}>{e.name}</option> 
                         ))}
                     </select>
-                </li>
-                <li>
+                </ul>
+                <ul>
                     <select
                     key="alphaOrder"
                     onChange={(e) => handleAlphabetOrder(e)} className="formbutton">
@@ -147,25 +147,23 @@ return (
                     <option value={"Asc"}>A to Z</option>
                     <option value={"Desc"}>Z to A</option>
                     </select>
-                </li>
-                <li>
+                </ul>
+                <ul>
                     <select
                     onChange={(e) => handleOrderByWeight(e)} className="formbutton">
                     <option value="selected" hidden>Weight filter</option>
                     <option value="Asc">Heavy-Light</option>
                     <option value="Desc">Light-Heavy</option>
                     </select>
-                </li>
-                <li>
+                </ul>
+                <ul>
                     <select
                     onChange={(e) => handleOrderByCreation(e)} className="formbutton">
                     <option value={"all"}>All Dogs</option>
                     <option value={"api"}>DogsFromApi</option>
                     <option value="created">DogsFromDb</option>
                     </select>
-                </li>
-                <li>
-                </li>
+                </ul>
                 </ul>
                 <div className="clear"></div>
             </nav>

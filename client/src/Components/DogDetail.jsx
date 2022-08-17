@@ -6,6 +6,7 @@ import { getDogDetail } from "../redux/actions.js";
 import { Link } from "react-router-dom";
 import defaultImage from "./Images/dogDefault.jpg";
 import loadingGif from "./Images/loading.gif";
+import './styles/DogDetail.css';
 //import dogTemp from "./Temp"
 
 
@@ -34,18 +35,18 @@ export default function Detail() {
   // }
 
 return (
-        <div>
+        <div className="detailBackground">
         {loading ? (
             <div className="loading"> <img src={loadingGif} alt="loading" /></div>
         ) : (
             <div id="detailCard">
-            <h1 id="tittle">{dogDetails.name}</h1>
+            <h1 id="tittle" className="detailDogName">{dogDetails.name}</h1>
             {dogDetails.image ? (
-                <img src={dogDetails.image} alt="Dog img" id="imgDetail" />
+                <img className="detailDogImg" src={dogDetails.image} alt="Dog img" id="imgDetail" />
             ) : (
                 <img id="imgDetail" src={defaultImage} alt="dogImg" />
             )}
-            <div>
+            <div className="detailDogProps">
                 {dogDetails.temperament ? (
                 <p>Temperaments: {dogDetails.temperament}</p>
                 ) : (

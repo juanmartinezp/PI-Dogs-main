@@ -60,7 +60,7 @@ return (
             <div className="detailOrder">
                 {currentDetails.map( (dogs) => {
                     return (
-                        <div key={dogs.id} >
+                        <div key={dogs.id} className="dogCard" >
                             <Link to={"/dogs/" + dogs.id} className="detail">
                                 <Dog 
                                     name={dogs.name} 

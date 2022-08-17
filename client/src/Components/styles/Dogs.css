@@ -14,6 +14,19 @@
     
 }
 
+.dogCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    background-color:transparent;
+    /* border: 2px solid red;
+    border-radius: 5px; */
+    padding: auto;
+    
+}
+
 
 .deleteButton {
     background-color: #f44336;
